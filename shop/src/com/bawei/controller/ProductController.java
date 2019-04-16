@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bawei.entity.Product;
 import com.bawei.service.IProductService;
-import com.bawei.service.ProductServiceImpl;
 import com.bawei.util.PageModel;
 
 @Controller
