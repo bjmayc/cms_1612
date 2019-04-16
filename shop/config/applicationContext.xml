@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
+	
+		<!-- 全包扫描 -->
+		<context:component-scan base-package="com.bawei"></context:component-scan>
+		
+		<!-- 加载   jdbc.properties -->
+		<context:property-placeholder location="classpath:jdbc.properties"/>
+		
+		<!-- 配置 数据源对象 -->
+		<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+			<property name="jdbcUrl">
+				<value>${jdbc.url}</value>
+			</property>
+			<property name="driverClass">
+				<value>${jdbc.driver}</value>
+			</property>
+			<property name="user">
+				<value>${jdbc.username}</value>
+			</property>
+			<property name="password">
+				<value>${jdbc.password}</value>
+			</property>
+		</bean>
+		
+		<!-- 配置 SqlSessionFactory对象 -->
+		<bean id="sessionFactory"  class="org.mybatis.spring.SqlSessionFactoryBean">
+			<property name="dataSource">
+				<ref bean="dataSource"/>
+			</property>
+			
+			<property name="configLocation">
+				<value>classpath:SqlMapConfig.xml</value>
+			</property>
+		</bean>
+		
+		<!-- 通过扫描包的方式 让spring容器 创建 dao实现类对象  -->
+		<bean  class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+			<property name="basePackage">
+				<value>com.bawei.dao</value>
+			</property>
+		
+		
+			<property name="sqlSessionFactoryBeanName">
+				<value>sessionFactory</value>
+			</property>
+		</bean>
+		
+		<!-- 配置事务 -->
+		<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+			<property name="dataSource" ref="dataSource"></property>
+		</bean>
+		<!-- 配置 通知 -->
+		<tx:advice id="txAdvice" transaction-manager="txManager">
+			<tx:attributes>
+				<tx:method name="save*" propagation="REQUIRED"/>
+				<tx:method name="insert*" propagation="REQUIRED"/>
+				<tx:method name="delete*" propagation="REQUIRED"/>
+				<tx:method name="remove*" propagation="REQUIRED"/>
+				<tx:method name="del*" propagation="REQUIRED"/>
+				<tx:method name="update*" propagation="REQUIRED"/>
+				<tx:method name="modify*" propagation="REQUIRED"/>
+				<tx:method name="get*" read-only="true"/>
+				<tx:method name="search*" read-only="true"/>
+				<tx:method name="find*" read-only="true"/>
+				<tx:method name="*" propagation="REQUIRED"/>
+			</tx:attributes>
+		</tx:advice>
+		
+		<aop:config>
+			<aop:pointcut expression="execution(* com.bawei.service.*.*(..))" id="myPointcut"/>
+			<aop:advisor advice-ref="txAdvice" pointcut-ref="myPointcut"/>
+		</aop:config>
+	
+</beans>

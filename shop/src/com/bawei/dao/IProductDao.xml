@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bawei.dao.IProductDao">
+	<select id="findHotProducts" resultType="product">
+		select  pid,pname,market_price as marketPrice,shop_price as shopPrice,pimage,pdate,is_hot as isHot,pdesc,pflag,cid from  tb_product where  is_hot=1  limit 0,9
+	</select>
+	
+	<select id="findNewProducts" resultType="product">
+		select  pid,pname,market_price as marketPrice,shop_price as shopPrice,pimage,pdate,is_hot as isHot,pdesc,pflag,cid from
+ tb_product order by pdate desc   limit 0,9
+	</select>
+	
+	<select id="count"  resultType="int">
+		select count(*) from  tb_product where cid=#{cid}
+	</select>
+	
+	<select id="findPage" resultType="product">
+		 select pid,pname,market_price as marketPrice,shop_price as shopPrice,pimage,pdate,is_hot as isHot,pdesc,pflag,cid from  tb_product where cid=#{cid} limit #{from},#{pageSize}
+	</select>
+	<select id="findByPid" resultType="product">
+		 select pid,pname,market_price as marketPrice,shop_price as shopPrice,pimage,pdate,is_hot as isHot,pdesc,pflag,cid from  tb_product where pid=#{pid}
+	</select>
+	
+	
+	
+	
+</mapper>
