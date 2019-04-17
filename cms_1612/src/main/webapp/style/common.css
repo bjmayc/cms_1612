@@ -1,0 +1,259 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: #efefef;
+}
+/* 重置列表元素 */
+ol,
+ul {
+  list-style: none;
+}
+
+input {
+  padding: 4px;
+  font-size: 14px;
+}
+input[type='checkbox'] {
+  width: 20px;
+  height: 20px;
+}
+/* global classes */
+.bg-white {
+  background-color: #fff;
+}
+.is-button {
+  padding: 8px 16px;
+  background-color: #eee;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+}
+
+.button-normal:hover {
+  background-color: #ddd;
+}
+.button-primary {
+  background-color: #f56c6c;
+  color: #ffffff;
+}
+.button-primary {
+  background-color: #f56c6c;
+  color: #ffffff;
+}
+.button-primary:hover {
+  background-color: #f12c2c;
+}
+
+/* common */
+
+.nav {
+  background: #fff;
+}
+
+.nav-inner {
+  width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  height: 48px;
+}
+
+.nav .head {
+  flex: 0 0 200px;
+  margin-right: 20px;
+  display: flex;
+  align-items: center;
+}
+.nav .logo-img {
+  width: 32px;
+  height: 32px;
+  background: url('../image//earth.png') no-repeat center;
+  background-size: contain;
+  margin-right: 10px;
+}
+.nav .head h2 {
+  font-size: 16px;
+  color: #666666;
+}
+
+.nav .user-info {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  color: #666;
+}
+
+.nav .user-info .search-input {
+  width: 160px;
+  margin-right: 20px;
+}
+.nav .user-info .line {
+  margin: 0 10px;
+}
+.nav .user-info .logout-btn {
+  cursor: pointer;
+}
+
+.banner {
+  height: 200px;
+  width: 100%;
+  background: url('../image//banner-img.jpg') no-repeat center;
+  background-size: cover;
+}
+
+.user-avatar {
+  width: 1000px;
+  margin: -24px auto 0;
+}
+.user-avatar .avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 100%;
+  overflow: hidden;
+  display: inline-block;
+  /* vertical-align: middle; */
+}
+.user-avatar .avatar img {
+  width: 100%;
+}
+.user-avatar .user-name {
+  font-size: 13px;
+  color: #666;
+}
+
+.person-center {
+  margin: 0px auto;
+  width: 1000px;
+  display: flex;
+  padding: 20px 0;
+}
+
+.person-menu {
+  background-color: #fff;
+  /* width: 160px; */
+  padding: 10px 0;
+  text-align: center;
+  flex: 0 0 160px;
+}
+.person-menu-item {
+  text-decoration: none;
+  color: #666;
+  transition: all ease 0.2s;
+  display: block;
+  line-height: 36px;
+}
+
+.person-menu-item.active {
+  background-color: #ccc;
+}
+
+.person-menu-item:hover {
+  background-color: #ddd;
+}
+
+.person-main {
+  flex: 1 0 auto;
+  margin-left: 28px;
+  min-height: 600px;
+}
+
+.article-item {
+  background-color: #fff;
+  margin-bottom: 20px;
+  padding: 10px 14px;
+  transition: all ease 0.2s;
+  border-radius: 4px;
+}
+
+.article-item:hover {
+  box-shadow: 5px 5px 10px #ccc;
+}
+
+.article-item_title {
+  font-size: 14px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: all ease 0.2s;
+}
+
+.article-item_title:hover {
+  color: #69b1f5;
+}
+
+.article-item_info {
+  display: flex;
+  font-size: 12px;
+  margin: 5px 0;
+  color: #999;
+}
+
+.article-item_info .info-left {
+  flex: 1;
+  flex-direction: row-reverse;
+}
+
+.article-item_info .info-left > * {
+  margin-right: 6px;
+}
+
+.article-item_info .info_more {
+  /* display: flex; */
+  flex: 0 0 200px;
+  display: flex;
+  justify-content: flex-end;
+  /* flex-direction: row-reverse; */
+}
+
+.article-btn {
+  cursor: pointer;
+  margin-left: 8px;
+}
+.article-btn:hover {
+  color: #f56c6c;
+}
+.status-deny {
+  color: #f56c6c;
+}
+.status-passed {
+  color: #99d099;
+}
+
+/* 个人设置 */
+.my-form {
+  padding: 20px;
+}
+.my-form .form-item {
+  margin-bottom: 20px;
+  display: flex;
+}
+.my-form .form-item .label {
+  display: inline-block;
+  width: 100px;
+  text-align: left;
+  font-size: 14px;
+}
+.my-form .form-item .form-item_input {
+  width: 160px;
+  height: 28px;
+  line-height: 28px;
+}
+.my-form .form-item_textarea {
+  width: 400px;
+  min-height: 200px;
+  line-height: 24px;
+}
+.my-form .tip {
+  margin: 10px 0;
+  font-size: 12px;
+  color: #999;
+}
+
+.my-form_btns {
+  padding: 10px 10px 10px 60px;
+}
+.my-form_btns button {
+  margin-right: 10px;
+}

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<typeAliases>
+		<!-- 全包扫描起别名 -->
+		<package name="com.bawei.cms.domain"/>
+	</typeAliases>
+
+	<mappers>
+		<!-- 引入 sql映射文件     !!!!!!!!!!!!!!!!!!!!!!同名 且 同位置下 才可以使用 全包引入      -->
+		<package name="com.bawei.cms.dao"/>
+	</mappers>
+</configuration>

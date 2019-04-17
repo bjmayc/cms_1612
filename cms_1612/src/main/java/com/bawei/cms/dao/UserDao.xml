@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.bawei.cms.dao.UserDao">
+	<insert id="regist">
+		insert into cms_user values(null,#{u.username},#{u.password},#{u.nickname},#{u.birthday},#{u.gender},1,#{u.createTime},null)
+	</insert>
+	
+	
+	<select id="login" resultType="user">
+		select  * from  cms_user
+		where username=#{username} and password=#{password}
+	</select>
+	
+	<update id="updatePwd">
+		update cms_user set password=#{newpwd} where username=#{username}
+	</update>
+	
+	<update id="update">
+			update cms_user set nickname=#{u.nickname},birthday=#{u.birthday},gender=#{u.gender}
+			 where id=#{u.id}
+	</update>
+	
+	<select id="findById"  resultType="user">
+		select * from cms_user where id=#{id}
+	</select>
+	
+	
+	
+	<select id="existUsername" resultType="user">
+		 select  * from   cms_user where username=#{username}
+	</select>
+	
+</mapper>

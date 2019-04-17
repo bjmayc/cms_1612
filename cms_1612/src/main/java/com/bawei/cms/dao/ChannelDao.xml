@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.bawei.cms.dao.ChannelDao">
+	<!-- 查询所有的栏目  -->
+	<select id="findAll" resultType="channel">
+		select  * from cms_channel
+	</select>
+	
+	<!--根据栏目id查询栏目下所有 种类  -->
+	<select  id="findCategorysByChannelId" resultType="category">
+	   select * from  cms_category  where  channel_id=#{channel_id}
+	</select>
+	
+	<!-- 发布文章 -->
+	<insert id="addArticle">
+		insert into  cms_article values(null,#{ar.title},#{ar.content},#{ar.picture},#{ar.channel_id},#{ar.category_id},#{ar.user_id},#{ar.hits},#{ar.hot},#{ar.status},#{ar.deleted},#{ar.created},#{ar.updated})	
+	</insert>
+	
+	<!-- 根据 用户id查询       这个用户 发表的所有的文章内容 -->
+	<select id="findArticlesByUserId"  resultType="Article">
+		select  id,title,content,channel_id,category_id,created,hits,status
+		  from cms_article where user_id=#{user_id}
+	</select>
+	
+	<!-- 根据 栏目 和 种类 分页查询 文章 -->
+	<select id="findArticlesByChannelAndCategory" resultType="Article">
+		select  id,title,content,hits,created,user_id,(select  nickname from cms_user   where id=ca.user_id) nickname,picture
+		 from cms_article ca where status=1 
+		 	<if test="channel_id!=null and channel_id!=0">
+			  and   channel_id=#{channel_id}	 
+		 	</if>
+		 	
+		 	<if test="category_id!=null and category_id!=0">
+			  and   category_id=#{category_id}	 
+		 	</if>
+		 	
+		 	<if test="like!=null and like!=''">
+		 		and  title like '%${like}%'
+		 	</if>
+		 	<!-- 需要的话   再对文章标题 模糊查询 -->
+		 limit  #{from},#{pageSize}
+	</select>
+	
+	<!-- 统计符合栏目和种类的  文章条数 -->
+	<select id="count" resultType="int">
+		select  count(*)
+		 from cms_article where status=1 
+		 	<if test="channel_id!=null and channel_id!=0">
+			  and   channel_id=#{channel_id}	 
+		 	</if>
+		 	
+		 	<if test="category_id!=null and category_id!=0">
+			  and   category_id=#{category_id}	 
+		 	</if>
+		 	<if test="like!=null and like!=''">
+		 		and  title like '%${like}%'
+		 	</if>
+		 	<!-- 需要的话   再对文章标题 模糊查询 -->
+	</select>
+	
+	<!--  查询某个栏目下的所有种类 -->
+	<select id="findCate" resultType="category">
+		select * from cms_category where channel_id=#{channel_id}
+	</select>
+	
+	<!-- 查询是热门头条的文章-->
+	<select id="findHot" resultType="article">
+		select  id,title,content,hits,created,user_id,(select  nickname from cms_user   where id=ca.user_id) nickname,picture
+		 from cms_article ca where hot=1 and  status=1
+	</select>
+	
+	<update id="updatePwd">
+		update  cms_user set password=#{newpwd}  where  username=#{username}
+	</update>
+	
+	<delete id="deleteById">
+	  delete from   cms_article  where id=#{id}
+	</delete>
+	
+	
+</mapper>

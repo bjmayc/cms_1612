@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.bawei.cms.dao.AdminDao">
+	
+	<select id="login"  resultType="Admin">
+		select  * from cms_settings where admin_username=#{username} and  admin_password=#{password}
+	</select>
+	
+	
+	<select id="shenhe" resultType="Article">
+		select   id,title,content,picture,status,channel_id,category_id,
+		(select nickname from  cms_user where id=ca.user_id) nickname,created
+		    from   cms_article  ca
+			<where>
+				<if test="title!=null and  title!=''">
+					and  title like  '%${title}%'
+				</if>
+				
+				<if test="status!=null and  status!=-1">
+					and  status=#{status}
+				</if>
+				<if test="content!=null  and content!=''">
+					and  content like  '%${content}%'
+				</if>
+				
+				
+				<if test="user!=null">
+					and  (select nickname from  cms_user where id=ca.user_id)  
+					like '%${user}%'  
+				</if>
+				
+				<if test="ts!=null and   ts!=''">
+					and created=#{ts}
+				</if>
+			</where>	
+			limit #{from},#{pageSize}
+	</select>
+	
+		<select id="count" resultType="int">
+		  select   count(*)
+		   from   cms_article   ca
+			<where>
+				<if test="title!=null and  title!=''">
+					and  title like  '%${title}%'
+				</if>
+				
+				<if test="status!=null and status !=-1">
+					and  status=#{status}
+				</if>
+				
+				<if test="content!=null  and content!=''">
+					and  content like  '%${content}%'
+				</if>
+				
+				<if test="user!=null">
+					and  (select nickname from  cms_user where id=ca.user_id)  like '%${user}%'  
+				</if>
+				
+				<if test="ts!=null and  ts!=''">
+					and created=#{ts}
+				</if>
+			</where>	
+	</select>
+	
+	<update id="update">
+		update cms_article set status=1 where id=#{id}
+	</update>
+	
+	<insert id="add">
+	  insert into cms_slide values(null,#{gg.title},#{gg.picture},#{gg.url})
+	</insert>
+</mapper>
